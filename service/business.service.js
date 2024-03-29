@@ -14,9 +14,9 @@ export const results=async(id,answer)=>{
         if(question.id== questionNumber && question.correctAnswer== answer){
           
           score++; // Increment score if correct answer is found
-          console.log(score);
+         
         }else{
-          console.log("God ooo")
+          console.log("failed the answer")
         }
     });
    
@@ -30,7 +30,8 @@ export const results=async(id,answer)=>{
 export const saveResults=async(decoded,score,exam)=>{
   try{
     const user= decoded.name; 
-    const exams= await findExamByTitle(exam)
+    const Exam= await findExamByTitle(exam)
+    const exams= Exam.title
     const result = new Result({
       user,
       score,
