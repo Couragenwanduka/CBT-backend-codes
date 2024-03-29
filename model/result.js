@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
+import Exam from '../model/exam.js';
 import User from '../model/user.js';
+
+
 
 const resultSchema=({
     score:{
@@ -7,9 +10,13 @@ const resultSchema=({
         required:true
     },
     user:{
-       type:mongoose.Schema.Types.ObjectId,
-       ref:User,
+       type:String,
        required:true
+    },
+    exams:{
+       type:mongoose.Schema.Types.ObjectId,
+       required:true,
+       ref:'Exam'
     }
 })
 

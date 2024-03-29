@@ -20,12 +20,13 @@ export const saveExamQuestion = async (req, res,next) => {
            throw error;
         }
         const existingQuestion= await findQuestionById(id);
+        console.log (existingQuestion)
         if(existingQuestion){
             const error= new Error ('Question already exists');
            error.status=400;
            throw error;
         }
-        const newQuestion= await saveQuestion(question,answers,correctAnswer,exam);
+        const newQuestion= await saveQuestion(id,question,answers,correctAnswer,exam);
         res.status(201).json({message:"Questions successfully saved",newQuestion});
 
     }catch(error){
@@ -38,7 +39,7 @@ export const saveExamQuestion = async (req, res,next) => {
 * except that this function updates the question
 */
 
-export const updateQuestion = async(req,res,next)=>{
+export const updateQuestions = async(req,res,next)=>{
     try{
       const {id,question,answers,correctAnswer} =req.body
       const valid= questionValidator(id, question,answers,correctAnswer)

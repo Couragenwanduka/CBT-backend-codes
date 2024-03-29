@@ -35,13 +35,14 @@ export const uploadExamDetails=async(req, res,next) =>{
                 error.status=400;
                 throw error;
             }
-            const questions= await findQuestionById(questionId);
-            if(!questions){
+            const id= questionId
+            const question= await findQuestionById(id);
+            if(!question){
                 const error= new Error ('couldnt find Question');
                 error.status=400;
                 throw error;
             }
-          const exam=await saveExamDetails(title,duration,passingScore,questions);
+          const exam=await saveExamDetails(title,duration,passingScore,question);
           return res.status(201).json({message:"Exam Created Successfully",exam})
       }catch(error){
         next(error)

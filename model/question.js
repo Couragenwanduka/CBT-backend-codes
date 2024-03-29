@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Exam from "./exam";
+import Exam from "./exam.js";
 const questionSchema= new mongoose.Schema({
     id:{
         type: Number,

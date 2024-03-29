@@ -1,19 +1,20 @@
-import Exam from '../model/exam';
+import Exam from '../model/exam.js';
 
 /*
   * this function is used to save exam details
   * it is exported and used in the exam contoller
 */
 
-export const saveExamDetails=(title, duration,passingScore,questions)=>{
+export const saveExamDetails= async(title, duration,passingScore,question)=>{
          try{
             const exam = new Exam({
                 title,
                 duration,
                 passingScore,
-                questions
+                question
              });
-            exam.save();
+             console.log(exam);
+          await exam.save();
             return exam;
          }catch(error){
             throw new Error ("Error saving exam details: " + error)
@@ -57,4 +58,14 @@ export const deleteExam = async (title) =>{
     }catch(error){
         throw new Error ("Error deleting exam: " + error)
     }
+}
+
+export const findExamById=async(id) =>{
+  try{
+      const exam = await Exam.findOne({_id:id});
+      return exam;
+  }catch(error){
+    throw new Error ("Error finding exam by id: " + error)
+  }
+
 }

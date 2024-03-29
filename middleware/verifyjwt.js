@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import {findUserByEmail} from '../service/user.service'
+import {findUserByEmail} from '../service/user.service.js';
 
 dotenv.config();
 
@@ -15,11 +15,7 @@ export const checkAdminAccess = async (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const isUserAuthorized = await findUserByEmail(decoded.email)
-
-        // console.log(isUserAuthorized);
-        const {role}= isUserAuthorized
-        if (role!== 'Admin') {
+        if (decoded.user.role !== 'admin') {
             return res.status(401).json({
                 message: "You are not authorized to access this resource"
             });

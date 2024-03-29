@@ -22,9 +22,8 @@ export const createUser=async(req, res,next)=>{
       const adminRegex=/^[^@\s]+@(?:[^.@\s]+\.)?courage\.com$/
       if(adminRegex.test(email)){
           const findAllAdmins= await findAdmins();
-          const adminArray=[];
-          adminArray.push(findAllAdmins);
-          if(adminArray.length >= 3){
+          console.log(findAllAdmins.length);
+          if(findAllAdmins.length >= 3){
             const error= new Error ('you cannot have move than 3 Admins');
             error.status=400;
             throw error;

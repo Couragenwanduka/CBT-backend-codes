@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import User from '../model/users.js';
+import User from '../model/user.js';
 
 export const hashpassword=async(password)=>{
    try{
@@ -17,7 +17,7 @@ export const comparePassword =async(email,password)=>{
       if(!findUser){
         throw new Error ("User not found")
       }
-      const isMatch = await bcrypt.compare(password,findUser.passWord);
+      const isMatch = await bcrypt.compare(password,findUser.password);
       return isMatch
     }catch(error){
         throw new Error ("password comparison failed"+error)

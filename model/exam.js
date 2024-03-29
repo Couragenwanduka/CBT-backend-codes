@@ -1,22 +1,22 @@
 import mongoose from 'mongoose';
-import questions from './question';
+import questions from './question.js';
 const examSchema= new  mongoose.Schema({
     title:{
           type:String,
           required:true
     },
     duration:{
-        type:Number,
+        type:String,
         required:true
     },
     passingScore:{
-        type:Number,
+        type:String,
         required:true
     },
-    questions:{
+    question:{
             type:mongoose.Schema.Types.ObjectId,
-            ref:questions,
-            required:true
+            required:true,
+            ref:'questions',
         }
     
 })

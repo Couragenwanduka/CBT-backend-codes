@@ -1,17 +1,25 @@
 import {findAllQuestions} from '../service/question.service.js';
 import Result from '../model/result.js';
+import {findExamByTitle} from '../service/exam.service.js'
+import {findExamById} from '../service/exam.service.js'
+import {findUserById} from '../service/user.service.js'
 
-export const results=async(userChoice)=>{
+
+export const results=async(id,answer)=>{
     try{
       const questions=await findAllQuestions();
-      const questionArray=[];
-      questionArray.push(questions);
+     const questionNumber= parseInt(id)
       let score = 0
-      const findIdAndAnswer= questionArray.forEach(question=>{
-        if (question.correctAnswer && question.id === userChoice.id && question.answer === userChoice.answer) {
-            score++; // Increment score if correct answer is found
-      }
+      const findIdAndAnswer= questions.forEach(question=>{
+        if(question.id== questionNumber && question.correctAnswer== answer){
+          
+          score++; // Increment score if correct answer is found
+          console.log(score);
+        }else{
+          console.log("God ooo")
+        }
     });
+   
       return score;
       
     }catch(error){
@@ -19,11 +27,14 @@ export const results=async(userChoice)=>{
     }
 }
 
-export const saveResults=async(user,score)=>{
+export const saveResults=async(decoded,score,exam)=>{
   try{
+    const user= decoded.name; 
+    const exams= await findExamByTitle(exam)
     const result = new Result({
       user,
       score,
+      exams
     });
     const savedResult= await result.save();
     return savedResult;
@@ -31,4 +42,13 @@ export const saveResults=async(user,score)=>{
     throw new Error ("could not save results for user" + error)
   }
 
+}
+
+export const getAllResults = async()=>{
+  try{
+    const results = await Result.find(); 
+    return results;
+  }catch(error){
+    throw new Error ("could not find results" + error)
+  }
 }

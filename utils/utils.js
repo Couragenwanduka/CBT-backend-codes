@@ -1,5 +1,5 @@
 import joi from 'joi';
-import {examSchema,questionSchema,userSchema,validationSchema} from '../config/joi';
+import {examSchema,questionSchema,userSchema,validationSchema} from '../config/joi.js';
 
 export const examValidator = (title, duration, passingScore)=>{
     try{
@@ -24,6 +24,7 @@ export const userValidator = (name, email, password, learningPath)=>{
        const result= userSchema.validate(name, email, password, learningPath)
        return result
     }catch(error){
+        console.log(error)
         throw new Error ("invalid input" + error)
     }
 };

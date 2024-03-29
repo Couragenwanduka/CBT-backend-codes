@@ -1,11 +1,11 @@
-import questions from "../model/question";
+import questions from "../model/question.js";
 
 /*
 * This function is responsible for finding specific questions
 */
-export const findQuestionById=async(questionId)=>{
+export const findQuestionById=async(id)=>{
   try{
-      const question=await questions.findById(questionId);
+      const question=await questions.findOne({id});
       return question;
   }catch(error){
     throw new Error ("Error while loading question" + error);
@@ -20,7 +20,7 @@ export const saveQuestion=async(id,question,answers, correctAnswer, exam)=>{
         const newQuestion=new questions({
             id,
             question,
-            answers:[answers],
+            answers,
             correctAnswer,
             exam
         });
@@ -38,7 +38,7 @@ export const saveQuestion=async(id,question,answers, correctAnswer, exam)=>{
 
 export const updateQuestion=async(id,question,answers, correctAnswer, exam)=>{
     try{
-        const updatedQuestion=await questions.findByIdAndUpdate(id,{
+        const updatedQuestion=await questions.findByIdAndUpdate({id},{
             question,
             answers:[answers],
             correctAnswer,
@@ -55,7 +55,7 @@ export const updateQuestion=async(id,question,answers, correctAnswer, exam)=>{
 */
 export const deleteQuestions=async(id)=>{
     try{
-        const deletedQuestion=await questions.findByIdAndDelete(id);
+        const deletedQuestion=await questions.findByIdAndDelete({id});
         return deletedQuestion;
     }catch(error){
         throw new Error ("Error while deleting question" + error);
@@ -68,8 +68,8 @@ export const deleteQuestions=async(id)=>{
 
 export const findAllQuestions=async()=>{
     try{
-        const questions=await questions.find();
-        return questions;
+        const question=await questions.find();
+        return question;
     }catch(error){
         throw new Error ("Error while loading questions" + error);
     }
